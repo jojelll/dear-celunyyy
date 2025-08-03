@@ -37,15 +37,23 @@ may life’s best gifts now come to thee.`;
   }
   typeWriter();
 
-  // Audio playback
+  // Audio playback with fallback
   audio.volume = 0.5;
   audio.play().catch((error) => {
     console.error("Audio playback failed:", error);
     // Fallback: Add click event to start audio
-    document.addEventListener("click", () => {
+    const playButton = document.createElement("button");
+    playButton.textContent = "Click to Play Audio";
+    playButton.style.position = "absolute";
+    playButton.style.top = "20px";
+    playButton.style.left = "50%";
+    playButton.style.transform = "translateX(-50%)";
+    playButton.addEventListener("click", () => {
+      audio.muted = false;
       audio.play().catch((error) => console.error("Audio playback failed on click:", error));
-      document.removeEventListener("click", arguments.callee);
+      playButton.remove();
     });
+    document.body.appendChild(playButton);
   });
 
   // Ensure animation duration matches audio
