@@ -1,7 +1,6 @@
 window.onload = () => {
   document.body.classList.remove("container");
 
-  // Typewriter effect
   const text = `Happy Birthday, dear Celuny,  
 a beacon in my life's grand sea.  
 You mean so much, truly, profoundly,  
@@ -20,28 +19,25 @@ each rising sun, a brighter day.
 Happy Birthday sweet Celuny,  
 may life’s best gifts now come to thee.`;
   let i = 0;
-  const speed = 50; // Adjustable typing speed (ms per character)
+  const speed = 50;
   const container = document.getElementById("typewriter-text");
   const totalChars = text.length;
   const audio = document.getElementById("music");
-  const audioDuration = audio.duration || 180; // Default to 180s (3 minutes) if duration unavailable
 
   function typeWriter() {
     if (i < totalChars) {
       container.textContent += text.charAt(i);
       i++;
       const progress = i / totalChars;
-      const delay = speed * (1 - progress * 0.5); // Gradually speed up
+      const delay = speed * (1 - progress * 0.5);
       setTimeout(typeWriter, delay);
     }
   }
   typeWriter();
 
-  // Audio playback with fallback
   audio.volume = 0.5;
   audio.play().catch((error) => {
     console.error("Audio playback failed:", error);
-    // Fallback: Add click event to start audio
     const playButton = document.createElement("button");
     playButton.textContent = "Click to Play Audio";
     playButton.style.position = "absolute";
@@ -55,9 +51,4 @@ may life’s best gifts now come to thee.`;
     });
     document.body.appendChild(playButton);
   });
-
-  // Ensure animation duration matches audio
-  audio.onloadedmetadata = () => {
-    document.body.style.animationDuration = `${audio.duration}s`;
-  };
 };
